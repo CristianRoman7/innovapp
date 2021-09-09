@@ -58,7 +58,7 @@ class ControladorEquipos{
 	static public function ctrMostrarEquipo($item, $valor){
 
 		$tabla = "equipos";
-		$respuesta = ModeloClientes::MdlMostrarEquipo($tabla, $item, $valor);
+		$respuesta = ModeloEquipos::MdlMostrarEquipo($tabla, $item, $valor);
 		return $respuesta;
 	}
 

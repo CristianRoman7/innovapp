@@ -8,7 +8,7 @@ class ModeloEquipos{
 	MOSTRAR EQUIPOS
 	=============================================*/
 
-	static public function mdlMostrarEquipos($tabla, $item, $valor){
+	static public function mdlMostrarEquipo($tabla, $item, $valor){
 
 		if($item != null){
 

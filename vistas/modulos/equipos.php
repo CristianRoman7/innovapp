@@ -129,14 +129,7 @@ MODAL AGREGAR EQUIPO
 
     <div class="modal-content">
 
-    <!--  SELECT PARA TABLA LISTA DESPLEGABLE: UBICACION -->
 
-    <?php
-      $mysqli = new mysqli('localhost', 'root', '', 'pos');
-      $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");  
-      while ($valores = mysqli_fetch_array($query_ubicacion) {
-        }
-    ?>
 
 
       <form role="form" method="post" enctype="multipart/form-data">

@@ -59,7 +59,9 @@ class ControladorClientes{
 	static public function ctrMostrarClientes($item, $valor){
 
 		$tabla = "clientes";
+
 		$respuesta = ModeloClientes::MdlMostrarClientes($tabla, $item, $valor);
+
 		return $respuesta;
 	}
 
@@ -69,15 +71,16 @@ class ControladorClientes{
 
 	static public function ctrEditarCliente(){
 
-		$tabla = "clientes";
-		$datos = array("razonSocial" => $_POST["nuevaRazonSocial"],
-					           "rutCliente" => $_POST["nuevoRutCliente"],
-					           "giro" => $_POST["nuevoGiro"],
-							   "direccion" => $_POST["nuevaDireccion"],
-							   "ciudad" => $_POST["nuevaCiudad"],
-							   "nombreContacto" => $_POST["nuevoNombreContacto"],
-							   "telefono" => $_POST["nuevoTelefono"],
-							   "email" => $_POST["nuevoEmail"]);
+		if(isset($_POST["editarCliente"])){
+		
+		$datos = array("razonSocial" => $_POST["editarRazonSocial"],
+					           "rutCliente" => $_POST["editarRutCliente"],
+					           "giro" => $_POST["editarGiro"],
+							   "direccion" => $_POST["editarDireccion"],
+							   "ciudad" => $_POST["editarCiudad"],
+							   "nombreContacto" => $_POST["editarNombreContacto"],
+							   "telefono" => $_POST["editarTelefono"],
+							   "email" => $_POST["editarEmail"]);
 
 		$respuesta = ModeloClientes::mdlEditarCliente($tabla, $datos);
 
@@ -109,7 +112,7 @@ class ControladorClientes{
 			  	</script>';
 
 			}
-
+		}
 	}
 
 	/*=============================================

@@ -346,7 +346,7 @@ MODAL AGREGAR SOLICITUD
               <div class="input-group">
               
                 <select>
-                    <option value="0" required>Seleccione el Cliente:</option>
+                    <option value="0" name="nuevoCliente" required>Seleccione el Cliente:</option>
                     <?php
                     $query_cliente = $mysqli -> query ("SELECT * FROM clientes");
                     while ($valores = mysqli_fetch_array($query_cliente)) {
@@ -366,7 +366,7 @@ MODAL AGREGAR SOLICITUD
               <div class="input-group">
               
                 <select>
-                    <option value="0" required>Seleccione el Equipo:</option>
+                    <option value="0" name="nuevoEquipo" required>Seleccione el Equipo:</option>
                     <?php
                     $query_equipo = $mysqli -> query ("SELECT * FROM equipos");
                     while ($valores = mysqli_fetch_array($query_equipo)) {
@@ -386,7 +386,7 @@ MODAL AGREGAR SOLICITUD
               <div class="input-group">
               
                 <select>
-                    <option value="0" required>Seleccione la Ubicación:</option>
+                    <option value="0" name="nuevaUbicacion" required>Seleccione la Ubicación:</option>
                     <?php
                     $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");
                     while ($valores = mysqli_fetch_array($query_ubicacion)) {
@@ -406,7 +406,7 @@ MODAL AGREGAR SOLICITUD
               <div class="input-group">
               
                 <select>
-                    <option value="0" required>Seleccione el usuario creador:</option>
+                    <option value="0" name="nuevoUsuarioCreador" required>Seleccione el usuario creador:</option>
                     <?php
                     $query_usuarioCreador = $mysqli -> query ("SELECT * FROM usuarios");
                     while ($valores = mysqli_fetch_array($query_usuarioCreador) {
@@ -426,7 +426,7 @@ MODAL AGREGAR SOLICITUD
               <div class="input-group">
               
                 <select>
-                    <option value="0" required>Seleccione el usuario asignado:</option>
+                    <option value="0" name="nuevoUsuarioAsignado"required>Seleccione el usuario asignado:</option>
                     <?php
                     $query_usuarioAsignado = $mysqli -> query ("SELECT * FROM usuarios");
                     while ($valores = mysqli_fetch_array($query_usuarioAsignado) {
@@ -641,7 +641,7 @@ MODAL EDITAR SOLICITUD
               
               <div class="input-group">
               
-                <select>
+                <select id="editarCliente" name="editarCliente">
                     <option value="" required></option>
                     <?php
                     $query_cliente = $mysqli -> query ("SELECT * FROM clientes");
@@ -661,7 +661,7 @@ MODAL EDITAR SOLICITUD
               
               <div class="input-group">
               
-                <select>
+                <select id="editarEquipo" name="editarEquipo">
                     <option value="" required></option>
                     <?php
                     $query_equipo = $mysqli -> query ("SELECT * FROM equipos");
@@ -681,7 +681,7 @@ MODAL EDITAR SOLICITUD
               
               <div class="input-group">
               
-                <select>
+                <select id="editarUbicacion" name="editarUbicacion">
                     <option value="" required></option>
                     <?php
                     $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");
@@ -701,7 +701,7 @@ MODAL EDITAR SOLICITUD
               
               <div class="input-group">
               
-                <select>
+                <select id="editarUsuarioCreador" name="editarUsuarioCreador">
                     <option value="" disabled></option>
                     <?php
                     $query_usuarioCreador = $mysqli -> query ("SELECT * FROM usuarios");
@@ -721,7 +721,7 @@ MODAL EDITAR SOLICITUD
               
               <div class="input-group">
               
-                <select>
+                <select id="editarUsuarioAsignado" name="editarUsuarioAsignado">
                     <option value="" required></option>
                     <?php
                     $query_usuarioAsignado = $mysqli -> query ("SELECT * FROM usuarios");

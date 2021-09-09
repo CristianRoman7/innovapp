@@ -129,6 +129,13 @@ MODAL AGREGAR EQUIPO
 
     <div class="modal-content">
 
+<!-- select para tablas de lista desplegable ubicacion-->
+<?php 
+        $mysqli = new mysqli('localhost', 'root', '', 'pos');
+        $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");  
+        while ($valores = mysqli_fetch_array($query_ubicacion)) {        
+        }
+        ?>
 
 
 
@@ -236,8 +243,7 @@ MODAL AGREGAR EQUIPO
               </div>
 
             </div> 
-
-                
+   
                 
             <!-- ENTRADA PARA UBICACION -->
 
@@ -428,7 +434,7 @@ MODAL EDITAR EQUIPO
      <?php
 
           $editarEquipo = new controladorEquipos();
-          $editarUbicacion -> ctrEditarEquipo();
+          $editarEquipo -> ctrEditarEquipo();
 
         ?> 
 

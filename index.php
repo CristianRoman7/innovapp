@@ -5,12 +5,14 @@ require_once "controladores/usuarios.controlador.php";
 require_once "controladores/clientes.controlador.php";
 require_once "controladores/ubicaciones.controlador.php";
 require_once "controladores/equipos.controlador.php";
+require_once "controladores/solicitudes.controlador.php";
 
 
 require_once "modelos/usuarios.modelo.php";
 require_once "modelos/clientes.modelo.php";
 require_once "modelos/ubicaciones.modelo.php";
 require_once "modelos/equipos.modelo.php";
+require_once "modelos/solicitudes.modelo.php";
 
 $plantilla = new ControladorPlantilla();
 $plantilla -> ctrPlantilla();

@@ -10,7 +10,7 @@
 
   <div class="login-box-body">
 
-    <p class="login-box-msg">Ingresar al sistema</p>
+    <p class="login-box-msg">Ingresar al sistema INNOVAPP</p>
 
     <form method="post">
 

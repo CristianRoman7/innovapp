@@ -101,7 +101,6 @@ class ControladorUsuarios{
 				if(isset($_FILES['nuevaFoto']) && strlen($_FILES['nuevaFoto']['tmp_name']) > 0) {
 					//$formato = getimagesize($_FILES['nuevaFoto']['tmp_name']);
 				
-				
 					list($ancho, $alto) = getimagesize($_FILES["nuevaFoto"]["tmp_name"]);
 
 					$nuevoAncho = 500;

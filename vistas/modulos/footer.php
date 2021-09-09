@@ -1,5 +1,5 @@
 <footer class="main-footer">
 	
-	<strong>INNOVATORS HOLDING SPA</a>.</strong>
+	<strong>PIE DE PÁGINA</a>.</strong>
 
 </footer>

@@ -359,25 +359,15 @@ MODAL EDITAR USUARIO
             <!-- ENTRADA PARA SELECCIONAR SU PERFIL -->
 
             <div class="form-group">
-              
               <div class="input-group">
-              
                 <span class="input-group-addon"><i class="fa fa-users"></i></span> 
-
                 <select class="form-control input-lg" name="editarPerfil">
-                  
                   <option value="" id="editarPerfil"></option>
-
                   <option value="Gerencial">Gerencial</option>
-
                   <option value="Administrativo">Administrativo</option>
-
                   <option value="Operativo">Operativo</option>
-
                 </select>
-
               </div>
-
             </div>
 
             <!-- ENTRADA PARA SUBIR FOTO -->

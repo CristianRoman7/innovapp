@@ -1,36 +1,20 @@
 <?php
-
-if($_SESSION["perfil"] == "Operativo"){
-
+if ($_SESSION["perfil"] == "Operativo") {
   echo '<script>
-
     window.location = "inicio";
-
   </script>';
-
   return;
-
 }
-
 ?>
+
 <div class="content-wrapper">
 
   <section class="content-header">
-    
-    <h1>
-      
-      Administrar Solicitudes
-    
-    </h1>
-
+    <h1>Administrar Solicitudes</h1>
     <ol class="breadcrumb">
-      
       <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
       <li class="active">Administrar Solicitudes</li>
-    
     </ol>
-
   </section>
 
   <section class="content">
@@ -38,92 +22,78 @@ if($_SESSION["perfil"] == "Operativo"){
     <div class="box">
 
       <div class="box-header with-border">
-  
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-          
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarSolicitud">
           Agregar Solicitudes
-
         </button>
-
       </div>
 
       <div class="box-body">
-        
-       <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-         
-        <thead>
-         
-         <tr>
+        <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
+          <thead>
+            <tr>
+              <th style="width:10px">#</th>
+              <th>N°Solicitud</th>
+              <th>Descripción</th>
+             
+              <th>Prioridad</th>
+              <th>Estado</th>
+              
+              <th>Incidente</th>
+              <th>Programada</th>
+              
+              <th>Cliente</th>
+              <th>Equipo</th>
+              <th>Ubicación</th>
+              
+              <th>Asignado a</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <?php
+
+            $item = null;
+            $valor = null;
+
+            $solicitudes = ControladorSolicitudes::ctrMostrarSolicitudes($item, $valor);
            
-           <th style="width:10px">#</th>
-           <th>N°Solicitud</th>
-           <th>Descripción</th>
-           <th>Referencia</th>
-           <th>Prioridad</th>
-           <th>Estado</th>
-           <th>Creación</th>
-           <th>Incidente</th>
-           <th>Programada</th>
-           <th>Cierre</th>
-           <th>Cliente</th>
-           <th>Equipo</th>
-           <th>Ubicación</th>
-           <th>Creado por</th>
-           <th>Asignado a</th>
-
-         </tr> 
-
-        </thead>
-
-        <tbody>
-
-        <?php
-
-        $item = null;
-        $valor = null;
-
-        $solicitudes = ControladorSolicitudes::ctrMostrarSolicitudes($item, $valor);
-
-       foreach ($solicitudes as $key => $value){
-         
-          echo ' <tr>
-                  <td>'.($key+1).'</td>
-                  <td>'.$value["numeroSolicitud"].'</td>
-                  <td>'.$value["descripcionSolicitud"].'</td>
-                  <td>'.$value["referencia"].'</td>
-                  <td>'.$value["prioridad"].'</td>
-                  <td>'.$value["estado"].'</td>
-                  <td>'.$value["fechaCreacion"].'</td>
-                  <td>'.$value["fechaIncidente"].'</td>
-                  <td>'.$value["fechaProgramada"].'</td>
-                  <td>'.$value["fechaCierre"].'</td>
-                  <td>'.$value["idCliente"].'</td>
-                  <td>'.$value["idEquipo"].'</td>
-                  <td>'.$value["idUbicacion"].'</td>
-                  <td>'.$value["idUsuarioCreador"].'</td>
-                  <td>'.$value["idUsuarioAsignado"].'</td>
-
-                  <td>
-
-                    <div class="btn-group">
+            
                         
-                      <button class="btn btn-warning btnEditarSolicitud" idSolicitud="'.$value["idSolicitud"].'" data-toggle="modal" data-target="#modalEditarSolicitud"><i class="fa fa-pencil"></i></button>
+            foreach ($solicitudes as $key => $value){
+         
+              echo ' <tr>
+                      <td>'.($key+1).'</td>
+                      <td>'.$value["numeroSolicitud"].'</td>
+                      <td>'.$value["descripcionSolicitud"].'</td>
+                      
+                      <td>'.$value["prioridad"].'</td>
+                      <td>'.$value["estado"].'</td>
+                      
+                      <td>'.$value["fechaIncidente"].'</td>
+                      <td>'.$value["fechaProgramada"].'</td>
+                     
+                      <td>'.$value["idCliente"].'</td>
 
-                      <button class="btn btn-danger btnEliminarSolicitud" idSolicitud="'.$value["idSolicitud"].'"><i class="fa fa-times"></i></button>
+                      <td>'.$value["idEquipo"].'</td>
+                      <td>'.$value["idUbicacion"].'</td>
+                      
+                      <td>'.$value["idUsuarioAsignado"].'</td>
+    
+                      <td>    
+                        <div class="btn-group">                            
+                          <button class="btn btn-success btnEditarSolicitud" idSolicitud="'.$value["idSolicitud"].'" data-toggle="modal" data-target="#modalEditarSolicitud"><i class="fa fa-eye"></i></button>    
+                          <button class="btn btn-danger btnEliminarSolicitud" idSolicitud="'.$value["idSolicitud"].'"><i class="fa fa-times"></i></button>    
+                        </div>      
+                      </td>  
+                    </tr>';
+            }
+            ?>
 
-                    </div>  
+          </tbody>
 
-                  </td>
-
-                </tr>';
-        }
-
-
-        ?> 
-
-        </tbody>
-
-       </table>
+        </table>
 
       </div>
 
@@ -137,54 +107,9 @@ if($_SESSION["perfil"] == "Operativo"){
 MODAL AGREGAR SOLICITUD
 ======================================-->
 
-<div id="modalAgregarSolicitud" class="modal fade" role="dialog">
-  
+<div id="modalAgregarSolicitud" class="modal fade" role="dialog">  
   <div class="modal-dialog">
-
     <div class="modal-content">
-
-        <!-- select para tablas de lista desplegable CLIENTE-->
-        <?php 
-        $mysqli = new mysqli('localhost', 'root', '', 'pos');
-        $query_cliente = $mysqli -> query ("SELECT * FROM clientes");  
-        while ($valores = mysqli_fetch_array($query_cliente)) {        
-        }
-        ?>
-
-        <!-- select para tablas de lista desplegable EQUIPO-->
-        <?php 
-        $mysqli = new mysqli('localhost', 'root', '', 'pos');
-        $query_equipo = $mysqli -> query ("SELECT * FROM equipos");  
-        while ($valores = mysqli_fetch_array($query_equipo)) {        
-        }
-        ?>
-
-        <!-- select para tablas de lista desplegable UBICACIONES-->
-        <?php 
-        $mysqli = new mysqli('localhost', 'root', '', 'pos');
-        $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");  
-        while ($valores = mysqli_fetch_array($query_ubicacion)) {        
-        }
-        ?>
-
-        <!-- select para tablas de lista desplegable USUARIO CREADOR-->
-        <?php 
-        $mysqli = new mysqli('localhost', 'root', '', 'pos');
-        $query_usuarioCreador = $mysqli -> query ("SELECT * FROM usuarios");  
-        while ($valores = mysqli_fetch_array($query_usuarioCreador)) {        
-        }
-        ?>
-
-        <!-- select para tablas de lista desplegable USUARIO ASIGNADO-->
-        <?php 
-        $mysqli = new mysqli('localhost', 'root', '', 'pos');
-        $query_usuarioAsignado = $mysqli -> query ("SELECT * FROM usuarios");  
-        while ($valores = mysqli_fetch_array($query_usuarioAsignado)) {        
-        }
-        ?>
-
-
-
       <form role="form" method="post" enctype="multipart/form-data">
 
         <!--=====================================
@@ -192,11 +117,8 @@ MODAL AGREGAR SOLICITUD
         ======================================-->
 
         <div class="modal-header" style="background:#3c8dbc; color:white">
-
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-          <h4 class="modal-title">Agregar Solicitud</h4>
-
+          <h4 class="modal-title">Agregar nueva Solicitud</h4>
         </div>
 
         <!--=====================================
@@ -204,242 +126,183 @@ MODAL AGREGAR SOLICITUD
         ======================================-->
 
         <div class="modal-body">
-
           <div class="box-body">
-
-            <!-- ENTRADA PARA EL N° SOLICITUD -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-user"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevoNumeroSolicitud" placeholder="Ingresar el número de solicitud" required>
-
+            <!-- ENTRADA PARA EL Nro SOLICITUD -->            
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-bars"></i></span> 
+                <input type="text" class="form-control input-lg" name="nuevoNumeroSolicitud" placeholder="Ingrese N° Solicitud" required>
               </div>
-
             </div>
 
-            <!-- ENTRADA PARA LA DESCRIPCIÓN -->
+            <!-- ENTRADA PARA DESCRIPCION -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
-                <textarea class="form-control" name="nuevaDescripcionSolicitud" placeholder="Descripción de la Solicitud" rows="3" required></textarea>
+             <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-comment"></i></span> 
+                <textarea name='nuevaDescripcionSolicitud' class='form-control input-lg' onClick='this.value=""'>Escriba la descripción aquí... </textarea>
               </div>
-
             </div>
 
             <!-- ENTRADA PARA LA REFERENCIA -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
-
-                <input type="text" class="form-control input-lg" name="nuevaReferencia" placeholder="Ingresar Referencia" required>
-
+             <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-check-square-o"></i></span> 
+                <input type="text" class="form-control input-lg" name="nuevaReferencia" placeholder="Ingrese Referencia" required>
               </div>
-
             </div>
 
-            <!-- ENTRADA PARA SELECCIONAR PRIORIDAD -->
+            <!-- ENTRADA PARA SELECCIONAR SU ESTADO -->
 
             <div class="form-group">
-              
-              <div class="input-group">
-              
+              <div class="input-group">           
+                <span class="input-group-addon"><i class="fa fa-circle-o-notch"></i></span> 
+                <select class="form-control input-lg" name="nuevoEstado">                
+                  <option value="">Seleccione Estado</option>
+                  <option value="abierto">Abierto</option>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="cerrado">Cerrado</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA LA FECHA CREACIÓN -->
+
+            <div class="form-group">    
+            <label>Fecha Creación</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" name="nuevaFechaCreacion" value="<?php echo date("Y-m-d");?>" readonly>
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA LA FECHA INCIDENTE -->
+
+            <div class="form-group">    
+            <label>Fecha del Incidente</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" name="nuevaFechaIncidente" required>
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA LA FECHA PROGRAMADA -->
+
+            <div class="form-group">    
+            <label>Fecha Programada de Atención</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" name="nuevaFechaProgramada">
+              </div>
+            </div>
+
+             <!-- ENTRADA PARA LA FECHA CIERRE -->
+
+             <div class="form-group">    
+            <label>Fecha de Cierre</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" name="NuevaFechaCierre">
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA SELECCIONAR SU CLIENTE -->
+
+            <div class="form-group">              
+              <div class="input-group">              
                 <span class="input-group-addon"><i class="fa fa-users"></i></span> 
-
-                <select class="form-control input-lg" name="nuevaPrioridad">
-                  
-                  <option value="">Selecionar prioridad</option>
-
-                  <option value="Alta">Alta</option>
-
-                  <option value="Media">Media</option>
-
-                  <option value="Baja">Baja</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-             <!-- ENTRADA PARA SELECCIONAR ESTADO DE LA SOLICITUD -->
-
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-users"></i></span> 
-
-                <select class="form-control input-lg" name="nuevoEstado">
-                  
-                  <option value="">Selecionar Estado</option>
-
-                  <option value="Abierto">Abierto</option>
-
-                  <option value="Cerrado">Cerrado</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA FECHA CREACION (OCULTO) -->
-            <input type="hidden" class="form-control input-lg" name="nuevaFechaCreacion" value=<?php getdate() ?>>
-
-            <!-- ENTRADA PARA FECHA INCIDENTE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="date" class="form-control input-lg" name="nuevaFechaIncidente" step="1" min="2021-01-01" max="2121-12-31" value="<?php echo date("Y-m-d");?>">
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA FECHA PROGRAMADA -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="date" class="form-control input-lg" name="nuevaFechaProgramada" step="1" min="2021-01-01" max="2121-12-31" value="<?php echo date("Y-m-d");?>">
-
-              </div>
-
-            </div>
-            
-            <!-- ENTRADA PARA FECHA CIERRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="date" class="form-control input-lg" name="nuevaFechaCierre" step="1" min="2021-01-01" max="2121-12-31" value="<?php echo date("Y-m-d");?>">
-
-              </div>
-
-            </div>
-
-
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA CLIENTE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select>
-                    <option value="0" name="nuevoCliente" required>Seleccione el Cliente:</option>
-                    <?php
-                    $query_cliente = $mysqli -> query ("SELECT * FROM clientes");
-                    while ($valores = mysqli_fetch_array($query_cliente)) {
-                        echo '<option value="'.$valores[id].'">'.$valores[razonSocial].'</option>';
+                <select class="form-control input-lg" name="nuevoPerfil">                  
+                  <option value="">Seleccione el Cliente</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["razonSocial"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
-            
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA EQUIPO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select>
-                    <option value="0" name="nuevoEquipo" required>Seleccione el Equipo:</option>
-                    <?php
-                    $query_equipo = $mysqli -> query ("SELECT * FROM equipos");
-                    while ($valores = mysqli_fetch_array($query_equipo)) {
-                        echo '<option value="'.$valores[idEquipo].'">'.$valores[codigoEquipo].'</option>';
+
+            <!-- ENTRADA PARA SELECCIONAR SU EQUIPO -->
+
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-wrench"></i></span> 
+                <select class="form-control input-lg" name="nuevoEquipo">                  
+                  <option value="">Seleccione el Equipo a Intervenir</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorEquipos::ctrMostrarEquipo($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["codigoEquipo"].$value["descripcionEquipo"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA UBICACION -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select>
-                    <option value="0" name="nuevaUbicacion" required>Seleccione la Ubicación:</option>
-                    <?php
-                    $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");
-                    while ($valores = mysqli_fetch_array($query_ubicacion)) {
-                        echo '<option value="'.$valores[idUbicacion].'">'.$valores[nombreUbicacion].'</option>';
+             <!-- ENTRADA PARA SELECCIONAR SU UBICACION -->
+
+             <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+                <select class="form-control input-lg" name="nuevaUbicacion">                  
+                  <option value="">Seleccione la Ubicación</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUbicaciones::ctrMostrarUbicaciones($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombreUbicacion"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA usuario creador -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select>
-                    <option value="0" name="nuevoUsuarioCreador" required>Seleccione el usuario creador:</option>
-                    <?php
-                    $query_usuarioCreador = $mysqli -> query ("SELECT * FROM usuarios");
-                    while ($valores = mysqli_fetch_array($query_usuarioCreador) {
-                        echo '<option value="'.$valores[id].'">'.$valores[nombre].'</option>';
+            <!-- ENTRADA PARA SELECCIONAR USUARIO CREADOR -->
+
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-user-circle"></i></span> 
+                <select class="form-control input-lg" name="nuevoUsuarioCreador">                  
+                  <option value="">Solicitud realizada por:</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombre"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA usuario asignado -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select>
-                    <option value="0" name="nuevoUsuarioAsignado"required>Seleccione el usuario asignado:</option>
-                    <?php
-                    $query_usuarioAsignado = $mysqli -> query ("SELECT * FROM usuarios");
-                    while ($valores = mysqli_fetch_array($query_usuarioAsignado) {
-                        echo '<option value="'.$valores[id].'">'.$valores[nombre].'</option>';
+            <!-- ENTRADA PARA SELECCIONAR USUARIO ASIGNADO -->
+
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span> 
+                <select class="form-control input-lg" name="nuevoUsuarioAsignado">                  
+                  <option value="">Solicitud asignada a:</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombre"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
-            
 
+          </div>
         </div>
 
         <!--=====================================
@@ -447,26 +310,18 @@ MODAL AGREGAR SOLICITUD
         ======================================-->
 
         <div class="modal-footer">
-
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-
           <button type="submit" class="btn btn-primary">Guardar</button>
-
         </div>
 
         <?php
-
           $crearSolicitud = new ControladorSolicitudes();
           $crearSolicitud -> ctrCrearSolicitud();
-
         ?>
 
       </form>
-
     </div>
-
   </div>
-
 </div>
 
 <!--=====================================
@@ -489,7 +344,7 @@ MODAL EDITAR SOLICITUD
 
           <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <h4 class="modal-title">Editar Solicitud</h4>
+          <h4 class="modal-title">Detalles de la Solicitud</h4>
 
         </div>
 
@@ -498,244 +353,183 @@ MODAL EDITAR SOLICITUD
         ======================================-->
 
         <div class="modal-body">
-
           <div class="box-body">
-
-                <!-- ENTRADA PARA EL N° SOLICITUD -->
-            
-                <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-ticket"></i></span> 
-
-                <input type="text" class="form-control input-lg" id="editarNumerosolicitud" name="editarNumeroSolicitud" value="" disabled>
-
+            <!-- ENTRADA PARA EL Nro SOLICITUD -->            
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-bars"></i></span> 
+                <input type="text" class="form-control input-lg" id="editarNumeroSolicitud" name="editarNumeroSolicitud" value="">
               </div>
-
             </div>
 
-            <!-- ENTRADA PARA LA DESCRIPCIÓN -->
+            <!-- ENTRADA PARA DESCRIPCION -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-commenting-o"></i></span>
-
-                <textarea class="form-control" id="editarDescripcionSolicitud" name="editarDescripcionSolicitud" value="" rows="3" disabled></textarea>
-              
+             <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-comment"></i></span> 
+                <textarea class='form-control input-lg' id='editarDescripcionSolicitud' name='editarDescripcionSolicitud' value=""></textarea>
               </div>
-
             </div>
 
             <!-- ENTRADA PARA LA REFERENCIA -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-lock"></i></span> 
-
-                <input type="text" class="form-control input-lg" id="editarReferencia" name="editarReferencia" value="" disabled>
-
+             <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-check-square-o"></i></span> 
+                <input type="text" class="form-control input-lg" id="editarReferencia" name="editarReferencia" value="">
               </div>
-
             </div>
 
-            <!-- ENTRADA PARA SELECCIONAR PRIORIDAD -->
+            <!-- ENTRADA PARA SELECCIONAR SU ESTADO -->
 
             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-bullhorn"></i></span> 
+              <div class="input-group">           
+                <span class="input-group-addon"><i class="fa fa-circle-o-notch"></i></span> 
+                <select class="form-control input-lg" name="editarEstado">                
+                  <option value="" id="editarEstado"></option>
+                  <option value="abierto">Abierto</option>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="cerrado">Cerrado</option>
+                </select>
+              </div>
+            </div>
 
-                <select class="form-control input-lg" id="editarPrioridad" name="editarPrioridad">
-                  
+            <!-- ENTRADA PARA LA FECHA CREACIÓN -->
+
+            <div class="form-group">    
+            <label>Fecha Creación</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" id="EditarFechaCreacion" name="EditarFechaCreacion" value="" readonly>
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA LA FECHA INCIDENTE -->
+
+            <div class="form-group">    
+            <label>Fecha del Incidente</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" id="editarFechaIncidente" name="editarFechaIncidente">
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA LA FECHA PROGRAMADA -->
+
+            <div class="form-group">    
+            <label>Fecha Programada de Atención</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" id="editarFechaProgramada" name="editarFechaProgramada">
+              </div>
+            </div>
+
+             <!-- ENTRADA PARA LA FECHA CIERRE -->
+
+             <div class="form-group">    
+            <label>Fecha de Cierre</label>          
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span> 
+                <input type="date" class="form-control input-lg" id="editarFechaCierre" name="editarFechaCierre">
+              </div>
+            </div>
+
+            <!-- ENTRADA PARA SELECCIONAR SU CLIENTE -->
+
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-users"></i></span> 
+                <select class="form-control input-lg" id="editarPerfil" name="editarPerfil">                  
                   <option value=""></option>
-
-                  <option value="Alta">Alta</option>
-
-                  <option value="Media">Media</option>
-
-                  <option value="Baja">Baja</option>
-
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorClientes::ctrMostrarClientes($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["razonSocial"].'</option>';                      
+                    }
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-             <!-- ENTRADA PARA SELECCIONAR ESTADO DE LA SOLICITUD -->
+            <!-- ENTRADA PARA SELECCIONAR SU EQUIPO -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-retweet"></i></span> 
-
-                <select class="form-control input-lg" id="editarEstado" name="editarEstado">
-                  
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-wrench"></i></span> 
+                <select class="form-control input-lg" id="editarEquipo" name="editarEquipo">                  
                   <option value=""></option>
-
-                  <option value="Abierto">Abierto</option>
-
-                  <option value="Cerrado">Cerrado</option>
-
-                </select>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA LA FECHA CREACION (OCULTO) -->
-            <input type="hidden" class="form-control input-lg" id="editarFechaCreacion" name="editarFechaCreacion" value="" disabled>
-
-            <!-- ENTRADA PARA FECHA INCIDENTE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="date" class="form-control input-lg" id="editarFechaIncidente"  name="editarFechaIncidente" step="1" min="2021-01-01" max="2121-12-31" value="" disabled>
-
-              </div>
-
-            </div>
-
-            <!-- ENTRADA PARA FECHA PROGRAMADA -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="date" class="form-control input-lg" id="editarFechaProgramada" name="editarFechaProgramada" step="1" min="2021-01-01" max="2121-12-31" value="">
-
-              </div>
-
-            </div>
-            
-            <!-- ENTRADA PARA FECHA CIERRE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-calendar"></i></span> 
-
-                <input type="date" class="form-control input-lg" id="editarFechaCierre" name="editarFechaCierre" step="1" min="2021-01-01" max="2121-12-31" value="">
-
-              </div>
-
-            </div>
-
-
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA CLIENTE -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select id="editarCliente" name="editarCliente">
-                    <option value="" required></option>
-                    <?php
-                    $query_cliente = $mysqli -> query ("SELECT * FROM clientes");
-                    while ($valores = mysqli_fetch_array($query_cliente)) {
-                        echo '<option value="'.$valores[id].'">'.$valores[razonSocial].'</option>';
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorEquipos::ctrMostrarEquipo($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["codigoEquipo"].$value["descripcionEquipo"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
-            
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA EQUIPO -->
-            
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select id="editarEquipo" name="editarEquipo">
-                    <option value="" required></option>
-                    <?php
-                    $query_equipo = $mysqli -> query ("SELECT * FROM equipos");
-                    while ($valores = mysqli_fetch_array($query_equipo)) {
-                        echo '<option value="'.$valores[idEquipo].'">'.$valores[codigoEquipo].'</option>';
+
+             <!-- ENTRADA PARA SELECCIONAR SU UBICACION -->
+
+             <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+                <select class="form-control input-lg" id="editarUbicacion" name="editarUbicacion">                  
+                  <option value=""></option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUbicaciones::ctrMostrarUbicaciones($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombreUbicacion"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA UBICACION -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select id="editarUbicacion" name="editarUbicacion">
-                    <option value="" required></option>
-                    <?php
-                    $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");
-                    while ($valores = mysqli_fetch_array($query_ubicacion)) {
-                        echo '<option value="'.$valores[idUbicacion].'">'.$valores[nombreUbicacion].'</option>';
+            <!-- ENTRADA PARA SELECCIONAR USUARIO CREADOR -->
+
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-user-circle"></i></span> 
+                <select class="form-control input-lg" id="editarUsuarioCreador" name="editarUsuarioCreador">                  
+                  <option value=""></option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombre"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA usuario creador -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select id="editarUsuarioCreador" name="editarUsuarioCreador">
-                    <option value="" disabled></option>
-                    <?php
-                    $query_usuarioCreador = $mysqli -> query ("SELECT * FROM usuarios");
-                    while ($valores = mysqli_fetch_array($query_usuarioCreador) {
-                        echo '<option value="'.$valores[id].'">'.$valores[nombre].'</option>';
+            <!-- ENTRADA PARA SELECCIONAR USUARIO ASIGNADO -->
+
+            <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-user-circle-o"></i></span> 
+                <select class="form-control input-lg" id="editarUsuarioAsignado" name="editarUsuarioAsignado">                  
+                  <option value=""></option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUsuarios::ctrMostrarUsuarios($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombre"].'</option>';                      
                     }
-                    ?>
+                  ?> 
                 </select>
-
               </div>
-
             </div>
 
-            <!-- ENTRADA LISTA DESPLEGABLE TABLA usuario asignado -->
-                        
-            <div class="form-group">
-              
-              <div class="input-group">
-              
-                <select id="editarUsuarioAsignado" name="editarUsuarioAsignado">
-                    <option value="" required></option>
-                    <?php
-                    $query_usuarioAsignado = $mysqli -> query ("SELECT * FROM usuarios");
-                    while ($valores = mysqli_fetch_array($query_usuarioAsignado) {
-                        echo '<option value="'.$valores[id].'">'.$valores[nombre].'</option>';
-                    }
-                    ?>
-                </select>
-
-              </div>
-
-            </div>
-            
-
+          </div>
         </div>
 
         <!--=====================================
@@ -743,17 +537,14 @@ MODAL EDITAR SOLICITUD
         ======================================-->
 
         <div class="modal-footer">
-
           <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Salir</button>
-
-          <button type="submit" class="btn btn-primary">Modificar</button>
-
+          <button type="submit" class="btn btn-primary">Guardar</button>
         </div>
 
      <?php
 
           $editarSolicitud = new ControladorSolicitudes();
-          $editarSolicitud -> ctrEditarSolicitud);
+          $editarSolicitud -> ctrEditarSolicitud();
 
         ?> 
 
@@ -766,10 +557,6 @@ MODAL EDITAR SOLICITUD
 </div>
 
 <?php
-
   $borrarSolicitud = new ControladorSolicitudes();
   $borrarSolicitud -> ctrBorrarSolicitud();
-
 ?> 
-
-

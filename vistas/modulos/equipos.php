@@ -1,60 +1,33 @@
 <?php
-
 if($_SESSION["perfil"] == "Operativo"){
-
   echo '<script>
-
     window.location = "inicio";
-
   </script>';
-
   return;
-
 }
-
 ?>
+
 <div class="content-wrapper">
-
   <section class="content-header">
-    
-    <h1>
-      
-      Administrar Equipos
-    
-    </h1>
-
-    <ol class="breadcrumb">
-      
-      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>
-      
+    <h1>Administrar Equipos</h1>
+    <ol class="breadcrumb">  
+      <li><a href="inicio"><i class="fa fa-dashboard"></i> Inicio</a></li>  
       <li class="active">Administrar Equipos</li>
-    
     </ol>
-
   </section>
 
   <section class="content">
-
     <div class="box">
-
       <div class="box-header with-border">
-  
-        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUbicacion">
-          
-          Agregar Equipo
-
+        <button class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarEquipo">
+         Agregar Equipo
         </button>
-
       </div>
 
       <div class="box-body">
-        
        <table class="table table-bordered table-striped dt-responsive tablas" width="100%">
-         
         <thead>
-         
          <tr>
-           
            <th style="width:10px">#</th>
            <th>Código</th>
            <th>Descripción</th>
@@ -64,22 +37,16 @@ if($_SESSION["perfil"] == "Operativo"){
            <th>Tipo</th>
            <th>Ubicación</th>
            <th>Acciones</th>
-
-         </tr> 
-
+         </tr>
         </thead>
-
         <tbody>
 
         <?php
-
         $item = null;
         $valor = null;
-
         $equipos = ControladorEquipos::ctrMostrarEquipo($item, $valor);
 
        foreach ($equipos as $key => $value){
-         
           echo ' <tr>
                   <td>'.($key+1).'</td>
                   <td>'.$value["codigoEquipo"].'</td>
@@ -103,43 +70,23 @@ if($_SESSION["perfil"] == "Operativo"){
 
                 </tr>';
         }
-
-
         ?> 
 
         </tbody>
-
        </table>
-
       </div>
-
     </div>
-
   </section>
-
 </div>
 
-<!--=====================================
-MODAL AGREGAR EQUIPO
-======================================-->
+        <!--=====================================
+        MODAL AGREGAR EQUIPO
+        ======================================-->
 
-<div id="modalAgregarEquipo" class="modal fade" role="dialog">
-  
-  <div class="modal-dialog">
-
-    <div class="modal-content">
-
-<!-- select para tablas de lista desplegable ubicacion-->
-<?php 
-        $mysqli = new mysqli('localhost', 'root', '', 'pos');
-        $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");  
-        while ($valores = mysqli_fetch_array($query_ubicacion)) {        
-        }
-        ?>
-
-
-
-      <form role="form" method="post" enctype="multipart/form-data">
+        <div id="modalAgregarEquipo" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <form role="form" method="post" enctype="multipart/form-data">
 
         <!--=====================================
         CABEZA DEL MODAL
@@ -243,30 +190,25 @@ MODAL AGREGAR EQUIPO
               </div>
 
             </div> 
-   
-                
-            <!-- ENTRADA PARA UBICACION -->
 
-             <div class="form-group">
-              
-              <div class="input-group">
-              
-                <span class="input-group-addon"><i class="fa fa-key"></i></span> 
+         <!-- ENTRADA PARA SELECCIONAR SU UBICACION -->
 
-                <select>
-                <option value="0" name="nuevaUbicacion" id="nuevaUbicacion" required>Seleccione:</option>
-                <?php
-                $query_ubicacion = $mysqli -> query ("SELECT * FROM ubicaciones");
-                while ($valores = mysqli_fetch_array($query_ubicacion)) {
-                    echo '<option value="'.$valores[idUbicacion].'">'.$valores[nombreUbicacion].'</option>';
-                }
-                ?>
+         <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+                <select class="form-control input-lg" name="nuevaUbicacion">                  
+                  <option value="">Seleccione la Ubicación</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUbicaciones::ctrMostrarUbicaciones($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombreUbicacion"].'</option>';                      
+                    }
+                  ?> 
                 </select>
-
               </div>
-
-            </div> 
-
+            </div>
 
           </div>
 
@@ -413,6 +355,26 @@ MODAL EDITAR EQUIPO
 
               </div>
 
+            </div>
+
+
+             <!-- ENTRADA PARA SELECCIONAR SU UBICACION -->
+
+         <div class="form-group">              
+              <div class="input-group">              
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span> 
+                <select class="form-control input-lg" name="nuevaUbicacion">                  
+                  <option value="">Seleccione la Ubicación</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $clientes = ControladorUbicaciones::ctrMostrarUbicaciones($item, $valor);
+                    foreach ($clientes as $key => $value){                      
+                      echo '<option value="'.($key+1).'">'.$value["nombreUbicacion"].'</option>';                      
+                    }
+                  ?> 
+                </select>
+              </div>
             </div>
 
           </div>
